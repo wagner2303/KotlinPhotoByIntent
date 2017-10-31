@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -198,5 +199,27 @@ class MainActivity : AppCompatActivity() {
             idleResource?.decrement()
         }
     }
+}
+
+private fun BitmapFactory.Options.scaleTo(dimenMin: Int): Int {
+    val dimen = Math.min(outWidth, outHeight)
+    return largestPowerOf2(dimen.toDouble()/dimenMin.toDouble())
+}
+
+fun largestPowerOf2(i: Double) = Math.pow(2.0, Math.floor(Math.log(i)/Math.log(2.0))).toInt()
+
+private fun File.compress(compression: Int, outputFile: File, scaledOptions: BitmapFactory.Options? = null): File {
+    val bitmap = BitmapFactory.decodeFile(absolutePath, scaledOptions)
+    outputFile.outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG, compression, it) }
+    return outputFile
+}
+
+private fun File.getScaledOptions(dimen: Int): BitmapFactory.Options {
+    val options = BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    BitmapFactory.decodeFile(absolutePath, options);
+    options.inSampleSize = options.scaleTo(dimen);
+    options.inJustDecodeBounds = false;
+    return options
 }
 
