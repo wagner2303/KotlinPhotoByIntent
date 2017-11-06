@@ -29,7 +29,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".FirebasePhotoActivity"></activity>
+        <activity android:name=".FirebasePhotoActivity"/>
+
     </application>
 
 </manifest>

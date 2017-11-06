@@ -1,10 +1,9 @@
 package com.wagner2303.kotlinphotobyintent
 
 import android.app.Activity
-import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v7.app.AppCompatActivity
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
@@ -53,8 +52,7 @@ class FirebasePhotoActivity : AppCompatActivity() {
         }
     }
 
-    private fun downloadFailure(exception: Exception) {
-        setResult(Activity.RESULT_CANCELED)
-        finish()
+        private fun downloadFailure(exception: Exception) {
+        throw exception
     }
 }

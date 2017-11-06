@@ -140,6 +140,9 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Arquivo corrompido, tente novamente", Toast.LENGTH_SHORT).show()
                     idleResource?.decrement()
                 }
+            } else {
+                Toast.makeText(this, "Erro ao baixar arquivo, tente novamente", Toast.LENGTH_SHORT).show()
+                idleResource?.decrement()
             }
         }
     }
@@ -181,7 +184,7 @@ class MainActivity : AppCompatActivity() {
     private fun createImageFile(): File? {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val externalStorage = Environment.getExternalStorageDirectory()
-        val storageDir = externalCacheDir //getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = cacheDir // getExternalFilesDir(Environment.DIRECTORY_PICTURES) //externalCacheDir
         val imageFile = File.createTempFile("COMPROVANTE_${timeStamp}_", ".jpg", storageDir)
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = imageFile.getAbsolutePath();
